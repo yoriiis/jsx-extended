@@ -1,11 +1,16 @@
+import { getAttributesByType } from '../utils'
+
 const ATTRIBUTE_SYNTAX = 'if'
 
 export default class ManagerCondition {
 	expression = `^${ATTRIBUTE_SYNTAX}$`
 
 	check ({ attributes }) {
-		const conditionFromAttribute = this.getConditionFromAttribute(attributes)
-		return attributes[conditionFromAttribute]
+		const validAttribute = getAttributesByType('condition', attributes)
+
+		if (validAttribute.length) {
+			return attributes[validAttribute[0]]
+		}
 	}
 
 	getConditionFromAttribute (attributes) {

@@ -1,12 +1,12 @@
-const path = require('path');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = (env, argv) => {
-	const isProduction = argv.mode === 'production';
+	const isProduction = argv.mode === 'production'
 
 	return {
 		watch: !isProduction,
@@ -116,5 +116,5 @@ module.exports = (env, argv) => {
 			providedExports: false,
 			splitChunks: false
 		}
-	};
-};
+	}
+}

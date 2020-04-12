@@ -1,3 +1,4 @@
+import { removeEmptyChildren } from './utils'
 import ManagerCondition from './managers/condition'
 import ManagerCustomEvents from './managers/custom-events'
 import ManagerEvents from './managers/events'
@@ -9,12 +10,15 @@ const managerEvents = new ManagerEvents()
 const managerDOMAttributes = new ManagerDOMAttributes()
 
 const CONDITIONAL_NODE_VALUE = null
-const EXPRESSION_CUSTOM_ATTRIBUTE = [managerCondition.expression, managerEvents.expression]
-
-managerDOMAttributes.expressionsCustomAttribute = EXPRESSION_CUSTOM_ATTRIBUTE
 
 export function createElement (tagName, attrs = {}, ...children) {
 	const attributes = attrs || {}
+
+	const condition = managerCondition.check({ attributes })
+
+	if (condition === false) {
+		return CONDITIONAL_NODE_VALUE
+	}
 
 	let element
 	if (tagName instanceof Function) {
@@ -25,27 +29,20 @@ export function createElement (tagName, attrs = {}, ...children) {
 		element = document.createDocumentFragment()
 	} else {
 		// HTML tags
-		const condition = managerCondition.check({ attributes })
-
-		// If condition is valid or no condition
-		if (condition || condition === undefined) {
-			element = document.createElement(tagName)
-			managerDOMAttributes.create({ element, attributes, ignore: [managerEvents.expression] })
-		} else {
-			return CONDITIONAL_NODE_VALUE
-		}
+		element = document.createElement(tagName)
+		managerDOMAttributes.create({ element, attributes, ignore: [managerEvents.expression] })
 	}
 
 	managerEvents.create({ element, attributes })
 	managerCustomEvents.create({ element, attributes })
 
-	const cleanChildren = getCleanChildren(children)
+	const cleanChildren = removeEmptyChildren(children, CONDITIONAL_NODE_VALUE)
 	for (const child of cleanChildren) {
 		// Check if direct child is not CONDITIONAL_NODE_VALUE
 		if (child !== CONDITIONAL_NODE_VALUE) {
 			if (Array.isArray(child)) {
 				// Check if sub child is not CONDITIONAL_NODE_VALUE
-				const cleanSubChildren = getCleanChildren(child)
+				const cleanSubChildren = removeEmptyChildren(child, CONDITIONAL_NODE_VALUE)
 				element.append(...cleanSubChildren)
 			} else element.append(child)
 		}
@@ -53,12 +50,8 @@ export function createElement (tagName, attrs = {}, ...children) {
 	return element
 }
 
-export { emitCustomEvent } from './managers/custom-events'
+export { dispatchEvent } from './utils'
 
 export function render (element, component) {
 	element.appendChild(component)
-}
-
-function getCleanChildren (children) {
-	return children.filter(child => child !== CONDITIONAL_NODE_VALUE)
 }
