@@ -1,13 +1,17 @@
 import ManagerCondition from './managers/condition'
+import ManagerCustomEvents from './managers/custom-events'
 import ManagerEvents from './managers/events'
 import ManagerDOMAttributes from './managers/dom-attributes'
 
 const managerCondition = new ManagerCondition()
+const managerCustomEvents = new ManagerCustomEvents()
 const managerEvents = new ManagerEvents()
-const managerDOMAttributes = new ManagerDOMAttributes({
-	expressions: [managerCondition.expression, managerEvents.expression]
-})
+const managerDOMAttributes = new ManagerDOMAttributes()
+
 const CONDITIONAL_NODE_VALUE = null
+const EXPRESSION_CUSTOM_ATTRIBUTE = [managerCondition.expression, managerEvents.expression]
+
+managerDOMAttributes.expressionsCustomAttribute = EXPRESSION_CUSTOM_ATTRIBUTE
 
 export function createElement (tagName, attrs = {}, ...children) {
 	const attributes = attrs || {}
@@ -33,6 +37,7 @@ export function createElement (tagName, attrs = {}, ...children) {
 	}
 
 	managerEvents.create({ element, attributes })
+	managerCustomEvents.create({ element, attributes })
 
 	const cleanChildren = getCleanChildren(children)
 	for (const child of cleanChildren) {
@@ -48,10 +53,12 @@ export function createElement (tagName, attrs = {}, ...children) {
 	return element
 }
 
-function getCleanChildren (children) {
-	return children.filter(child => child !== CONDITIONAL_NODE_VALUE)
-}
+export { emitCustomEvent } from './managers/custom-events'
 
 export function render (element, component) {
 	element.appendChild(component)
+}
+
+function getCleanChildren (children) {
+	return children.filter(child => child !== CONDITIONAL_NODE_VALUE)
 }

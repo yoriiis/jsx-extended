@@ -1,5 +1,7 @@
+const ATTRIBUTE_SYNTAX = 'if'
+
 export default class ManagerCondition {
-	expression = /^if$/
+	expression = `^${ATTRIBUTE_SYNTAX}$`
 
 	check ({ attributes }) {
 		const conditionFromAttribute = this.getConditionFromAttribute(attributes)

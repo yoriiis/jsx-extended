@@ -1,7 +1,5 @@
 export default class ManagerDOMAttributes {
-	constructor ({ expressions = [] }) {
-		this.expressions = expressions
-	}
+	static expressionsCustomAttribute
 
 	create ({ element, attributes }) {
 		const DOMAttributes = this.getDOMAttributes(attributes)
@@ -15,11 +13,11 @@ export default class ManagerDOMAttributes {
 	}
 
 	mergeExpressions () {
-		return `(${this.expressions.map(expression => expression.source).join('|')})`
+		return `(${this.expressionsCustomAttribute.join('|')})`
 	}
 
 	isAttributeNotMatchExpressions (attribute) {
-		return !attribute.match(this.mergeExpressions())
+		return !attribute.match(new RegExp(this.mergeExpressions()))
 	}
 
 	setAttribute (element, attribute) {

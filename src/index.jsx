@@ -1,11 +1,16 @@
-import { createElement, render } from '../jsx/core'
+import { createElement, render, emitCustomEvent } from '../jsx/core'
 
 const InputComponent = props => (
 	<input type="text" data-name={props.name} value={props.name} e:keyup={handleEvent} />
 )
 
 function handleEvent (e) {
-	console.log('event', e.type)
+	console.log('event', e.type, this)
+	emitCustomEvent(this, 'hello')
+}
+
+function handleCustomEvent (e) {
+	console.log('customEvent', e.type, this)
 }
 
 const persons = ['John Doe', 'Mickael Emphys', 'Henry pleyd']
@@ -21,7 +26,7 @@ const elements = (
 		</section>
 		<section>
 			<h3>Test DOM attributes</h3>
-			<p style="color: red;" class="title" id="main-title" data-title="true">
+			<p style="color: red;" class="title" id="main-title" data-title="true" aria-label="Text">
 				Hello <span>World</span>
 			</p>
 		</section>
@@ -44,7 +49,7 @@ const elements = (
 		</section>
 		<section>
 			<h3>Test events</h3>
-			<button class="btn" id="btn" ariaLabel="Submit" e:click={handleEvent} e:mouseover={handleEvent}>Submit</button>
+			<button class="btn" id="btn" ariaLabel="Submit" e:click={handleEvent} ce:hello={handleCustomEvent}>Submit</button>
 		</section>
 	</>
 )
