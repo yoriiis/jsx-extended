@@ -25,7 +25,7 @@ module.exports = function (api) {
 		[
 			'@babel/plugin-transform-react-jsx',
 			{
-				pragma: 'Rlite.createElement',
+				pragma: 'createElement',
 				pragmaFrag: "'fragment'",
 				throwIfNamespace: false
 			}
