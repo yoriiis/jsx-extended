@@ -13,6 +13,8 @@
 	"scripts": {
 		"build": "rm -rf ./dist/ && webpack --mode=production",
 		"build:example": "rm -rf ./example/dist/ && webpack --config=./example/webpack.config.js --mode=production",
+		"docs:build": "vuepress build docs",
+		"docs:dev": "vuepress dev docs",
 		"start": "rm -rf ./dist/ && webpack --mode=development",
 		"start:example": "rm -rf ./example/dist/ && webpack --config=./example/webpack.config.js --mode=development",
 		"test": "jest",
@@ -126,6 +128,7 @@
 		"stylelint-config-recommended": "3.0.0",
 		"stylelint-config-standard": "19.0.0",
 		"terser-webpack-plugin": "2.3.2",
+		"vuepress": "1.4.0",
 		"webpack": "4.41.5",
 		"webpack-cli": "3.3.10",
 		"webpack-manifest-plugin": "2.2.0"

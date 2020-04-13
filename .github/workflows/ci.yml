@@ -17,3 +17,5 @@ jobs:
       - run: npm run test:eslint
       - run: npm run test:stylelint
       - run: npm run build
+      - run: npm run build:example
+      - run: npm run docs:build
