@@ -17,7 +17,7 @@ module.exports = function (api) {
 		[
 			'@babel/plugin-transform-react-jsx',
 			{
-				pragma: 'createElement',
+				pragma: 'jsx.createElement',
 				pragmaFrag: "'fragment'",
 				throwIfNamespace: false
 			}

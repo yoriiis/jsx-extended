@@ -96,23 +96,20 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "./src/create-element.js":
+/*!*******************************!*\
+  !*** ./src/create-element.js ***!
+  \*******************************/
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createElement", function() { return createElement; });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils.js");
 /* harmony import */ var _managers_condition__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./managers/condition */ "./src/managers/condition.js");
 /* harmony import */ var _managers_events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./managers/events */ "./src/managers/events.js");
 /* harmony import */ var _managers_dom_attributes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./managers/dom-attributes */ "./src/managers/dom-attributes.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dispatchEvent", function() { return _utils__WEBPACK_IMPORTED_MODULE_0__["dispatchEvent"]; });
-
 
 
 
@@ -121,8 +118,8 @@ const managerCondition = new _managers_condition__WEBPACK_IMPORTED_MODULE_1__["d
 const managerEvents = new _managers_events__WEBPACK_IMPORTED_MODULE_2__["default"]();
 const managerDOMAttributes = new _managers_dom_attributes__WEBPACK_IMPORTED_MODULE_3__["default"]();
 const EMPTY_NODE_VALUE = null;
-
 function createElement(tagName, attributes = {}, ...children) {
+  // Check if element need to be passed
   if (attributes !== null && managerCondition.check({
     attributes
   }) === false) {
@@ -139,22 +136,18 @@ function createElement(tagName, attributes = {}, ...children) {
     element = document.createDocumentFragment();
   } else {
     // HTML tags
-    element = document.createElement(tagName);
+    element = document.createElement(tagName); // Build element attributes and events listeners
 
     if (attributes !== null) {
       managerDOMAttributes.create({
         element,
-        attributes,
-        ignore: [managerEvents.expression]
+        attributes
+      });
+      managerEvents.create({
+        element,
+        attributes
       });
     }
-  }
-
-  if (attributes !== null) {
-    managerEvents.create({
-      element,
-      attributes
-    });
   }
 
   const cleanChildren = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["removeEmptyChildren"])(children, EMPTY_NODE_VALUE);
@@ -173,12 +166,37 @@ function createElement(tagName, attributes = {}, ...children) {
   return element;
 }
 
-function render(element, component) {
-  element.appendChild(component);
-}
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! ModuleConcatenation bailout: Module exports are unknown */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dispatchEvent", function() { return _utils__WEBPACK_IMPORTED_MODULE_0__["dispatchEvent"]; });
+
+/* harmony import */ var _render__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./render */ "./src/render.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _render__WEBPACK_IMPORTED_MODULE_1__["render"]; });
+
+/* harmony import */ var _create_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./create-element */ "./src/create-element.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createElement", function() { return _create_element__WEBPACK_IMPORTED_MODULE_2__["createElement"]; });
 
 
 
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  render: _render__WEBPACK_IMPORTED_MODULE_1__["render"],
+  createElement: _create_element__WEBPACK_IMPORTED_MODULE_2__["createElement"],
+  dispatchEvent: _utils__WEBPACK_IMPORTED_MODULE_0__["dispatchEvent"]
+});
 
 /***/ }),
 
@@ -226,13 +244,37 @@ class ManagerDOMAttributes {
     element,
     attributes
   }) {
-    Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getAttributesByType"])('domAttribute', attributes).map(({
+    const attrs = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getAttributesByType"])('domAttribute', attributes);
+    attrs.map(({
       name,
-      ...fields
+      value
     }) => ({
       name: name === 'classname' ? 'class' : name,
-      ...fields
-    })).map(attribute => Object(_utils__WEBPACK_IMPORTED_MODULE_0__["setAttribute"])(element, attribute));
+      value
+    })).map(({
+      name,
+      value
+    }) => {
+      if (name === 'style' && value instanceof Object) {
+        // Style properties as object
+        // Add all style properties on node property
+        Object.keys(value).map(property => element.style[property] = value[property]);
+      } else if (name === 'dataset') {
+        if (value instanceof Object && !Array.isArray(value)) {
+          // Dataset properties as object
+          // Add all key as dataset property
+          Object.keys(value).map(key => {
+            element.dataset[key] = value[key];
+          });
+        }
+      } else {
+        // Basic HTML attribute
+        Object(_utils__WEBPACK_IMPORTED_MODULE_0__["setAttribute"])(element, {
+          name,
+          value
+        });
+      }
+    });
   }
 
 }
@@ -269,6 +311,22 @@ class ManagerEvents {
 
 /***/ }),
 
+/***/ "./src/render.js":
+/*!***********************!*\
+  !*** ./src/render.js ***!
+  \***********************/
+/*! ModuleConcatenation bailout: Module exports are unknown */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+function render(element, container) {
+  container.appendChild(element);
+}
+
+/***/ }),
+
 /***/ "./src/utils.js":
 /*!**********************!*\
   !*** ./src/utils.js ***!
@@ -288,7 +346,7 @@ __webpack_require__.r(__webpack_exports__);
 const EXPRESSION = {
   condition: '^if$',
   event: '^(on)([A-Z]{1}[a-z]+)+$',
-  domAttribute: '^(?!(on|class$|if$))([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
+  domAttribute: '^(?!(on|if$))([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
 };
 function getAttributesByType(type, attributes) {
   if (hasOwn(EXPRESSION, type)) {
@@ -315,7 +373,7 @@ function setAttribute(element, attribute) {
 function addEventListener(element, attribute) {
   element.addEventListener(attribute.name, attribute.value, false);
 }
-function dispatchEvent(element, event) {
+function dispatchEvent(event, element) {
   element.dispatchEvent(new window.CustomEvent(event));
 }
 function removeEmptyChildren(children, emptyValue) {

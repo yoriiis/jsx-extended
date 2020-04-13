@@ -1,7 +1,7 @@
 export const EXPRESSION = {
 	condition: '^if$',
 	event: '^(on)([A-Z]{1}[a-z]+)+$',
-	domAttribute: '^(?!(on|class$|if$))([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
+	domAttribute: '^(?!(on|if$))([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
 }
 
 export function getAttributesByType (type, attributes) {
@@ -34,7 +34,7 @@ export function addEventListener (element, attribute) {
 	element.addEventListener(attribute.name, attribute.value, false)
 }
 
-export function dispatchEvent (element, event) {
+export function dispatchEvent (event, element) {
 	element.dispatchEvent(new window.CustomEvent(event))
 }
 
