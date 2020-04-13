@@ -1,4 +1,5 @@
-import { createElement, render, dispatchEvent } from '../jsx/core'
+import { createElement, render, dispatchEvent } from '../../dist/jsx'
+import './demo.css'
 
 const InputComponent = props => (
 	<input type="text" data-name={props.name} value={props.name} e:keyup={handleEvent} />

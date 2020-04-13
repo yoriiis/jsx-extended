@@ -5,7 +5,7 @@ export default class ManagerCondition {
 		const validAttribute = getAttributesByType('condition', attributes)
 
 		if (validAttribute.length) {
-			return attributes[validAttribute[0]]
+			return validAttribute[0].value
 		}
 	}
 }

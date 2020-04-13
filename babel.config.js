@@ -14,14 +14,6 @@ module.exports = function (api) {
 
 	const plugins = [
 		'@babel/plugin-proposal-class-properties',
-		// [
-		// 	'./custom-plugin-babel.js',
-		// 	{
-		// 		pragma: 'createElement',
-		// 		pragmaFrag: "'fragment'",
-		// 		throwIfNamespace: false
-		// 	}
-		// ],
 		[
 			'@babel/plugin-transform-react-jsx',
 			{
@@ -30,14 +22,6 @@ module.exports = function (api) {
 				throwIfNamespace: false
 			}
 		]
-		// [
-		// 	'@babel/plugin-syntax-jsx',
-		// 	{
-		// 		pragma: 'createElement',
-		// 		pragmaFrag: "'fragment'",
-		// 		throwIfNamespace: false
-		// 	}
-		// ]
 	]
 
 	return {

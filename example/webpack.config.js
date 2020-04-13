@@ -1,7 +1,9 @@
 const path = require('path')
 const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
@@ -9,7 +11,7 @@ module.exports = (env, argv) => {
 	return {
 		watch: !isProduction,
 		entry: {
-			jsx: './src/index.js'
+			demo: `${path.resolve(__dirname, './src/demo.jsx')}`
 		},
 		watchOptions: {
 			ignored: /node_modules/
@@ -19,24 +21,47 @@ module.exports = (env, argv) => {
 			path: path.resolve(__dirname, './dist'),
 			publicPath: '/dist/',
 			filename: '[name].js',
-			sourceMapFilename: '[file].map',
-			libraryTarget: 'umd',
-			library: 'jsx'
+			sourceMapFilename: '[file].map'
 		},
 		module: {
 			rules: [
 				{
-					test: /\.js$/,
+					test: /\.(js|jsx)$/,
 					include: path.resolve(__dirname, './src'),
 					use: [
 						{
 							loader: 'babel-loader'
 						}
 					]
+				},
+				{
+					test: /\.css$/,
+					include: [path.resolve(__dirname, './src')],
+					use: [
+						MiniCssExtractPlugin.loader,
+						{
+							loader: 'css-loader'
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								config: {
+									path: path.resolve(__dirname, './')
+								}
+							}
+						}
+					]
 				}
 			]
 		},
-		plugins: [new ProgressBarPlugin(), new webpack.optimize.ModuleConcatenationPlugin()],
+		plugins: [
+			new ProgressBarPlugin(),
+			new MiniCssExtractPlugin({
+				filename: '[name].css',
+				chunkFilename: '[name].css'
+			}),
+			new webpack.optimize.ModuleConcatenationPlugin()
+		],
 		stats: {
 			assets: true,
 			colors: true,
@@ -64,7 +89,8 @@ module.exports = (env, argv) => {
 						},
 						mangle: true
 					}
-				})
+				}),
+				new OptimizeCSSAssetsPlugin({})
 			],
 			namedModules: true,
 			removeAvailableModules: true,

@@ -1,13 +1,12 @@
 export const EXPRESSION = {
 	condition: '^if$',
 	event: '^(on)([A-Z]{1}[a-z]+)+$',
-	domAttribute: '^(?!on)([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
+	domAttribute: '^(?!(on|class$|if$))([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
 }
 
 export function getAttributesByType (type, attributes) {
-	const expression = EXPRESSION[type]
-
 	if (hasOwn(EXPRESSION, type)) {
+		const expression = EXPRESSION[type]
 		return Object.keys(attributes)
 			.filter(attribute => new RegExp(expression).test(attribute))
 			.map(attribute => ({
