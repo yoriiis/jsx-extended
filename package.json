@@ -19,7 +19,7 @@
 		"test:coverage": "jest --coverage",
 		"test:eslint": "eslint . --ignore-pattern dist",
 		"test:markdown": "markdownlint '**/*.md' --ignore node_modules",
-		"test:stylelint": "stylelint './src/**/*.css'",
+		"test:stylelint": "stylelint './example/src/*.css'",
 		"test:watch": "jest --watch --coverage"
 	},
 	"browserslist": [
