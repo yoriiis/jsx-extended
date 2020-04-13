@@ -1,11 +1,9 @@
 import { removeEmptyChildren } from './utils'
 import ManagerCondition from './managers/condition'
-import ManagerCustomEvents from './managers/custom-events'
 import ManagerEvents from './managers/events'
 import ManagerDOMAttributes from './managers/dom-attributes'
 
 const managerCondition = new ManagerCondition()
-const managerCustomEvents = new ManagerCustomEvents()
 const managerEvents = new ManagerEvents()
 const managerDOMAttributes = new ManagerDOMAttributes()
 
@@ -34,7 +32,6 @@ export function createElement (tagName, attrs = {}, ...children) {
 	}
 
 	managerEvents.create({ element, attributes })
-	managerCustomEvents.create({ element, attributes })
 
 	const cleanChildren = removeEmptyChildren(children, CONDITIONAL_NODE_VALUE)
 	for (const child of cleanChildren) {

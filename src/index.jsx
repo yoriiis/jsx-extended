@@ -6,7 +6,7 @@ const InputComponent = props => (
 
 function handleEvent (e) {
 	console.log('event', e.type, this)
-	dispatchEvent(this, 'helloGuy')
+	dispatchEvent(this, 'helloguy')
 }
 
 function handleCustomEvent (e) {
@@ -17,24 +17,24 @@ const persons = ['John Doe', 'Mickael Emphys', 'Henry pleyd']
 
 const elements = (
 	<>
-		{/* <section>
+		<section>
 			<h3>Test conditional</h3>
 			<h1 class="title" if={persons.length}>
 				Hello
 				<span class="label"> world</span>
 			</h1>
-		</section> */}
-		{/* <section>
+		</section>
+		<section>
 			<h3>Test DOM attributes</h3>
 			<p style="color: red;" class="title" id="main-title" data-title="true" aria-label="Text">
 				Hello <span>World</span>
 			</p>
-		</section> */}
-		{/* <section>
+		</section>
+		<section>
 			<h3>Test function component</h3>
 			<InputComponent name={persons[1]} />
-		</section> */}
-		{/* <section>
+		</section>
+		<section>
 			<h3>Test loop</h3>
 			<ul>
 				{persons.map((name, index) => (
@@ -46,17 +46,19 @@ const elements = (
 					</li>
 				))}
 			</ul>
-		</section> */}
+		</section>
 		<section>
-			{/* <h3>Test events</h3> */}
-			<button class="btn"
-				className="btn2"
+			<h3>Test events</h3>
+			<button
 				id="main-btn"
+				class="btn"
 				aria-label="Submit"
 				data-text="Submit"
-				tabindex="1"
+				tabIndex="1"
+				className="btn2"
 				onClick={handleEvent}
-				onHelloGuy={handleCustomEvent}>
+				onHelloGuy={handleCustomEvent}
+			>
 				Submit
 			</button>
 		</section>
