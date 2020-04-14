@@ -1,3 +1,8 @@
+/*!
+ * JSX.js v1.0.0
+ * (c) 2020-2020 Yoriiis
+ * Released under the MIT License.
+ */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -220,12 +225,12 @@
 		return element
 	}
 
-	var index = {
+	const jsx = {
 		render,
 		createElement,
 		dispatchEvent
 	};
 
-	return index;
+	return jsx;
 
 })));

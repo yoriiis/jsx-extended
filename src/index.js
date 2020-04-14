@@ -1,8 +1,9 @@
 import { render, dispatchEvent } from './utils'
 import createElement from './create-element'
 
-export default {
+const jsx = {
 	render,
 	createElement,
 	dispatchEvent
 }
+export default jsx
