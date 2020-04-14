@@ -11,30 +11,21 @@ module.exports = {
 		prevLinks: true,
 		lastUpdated: 'Last Updated',
 		searchPlaceholder: 'Search...',
-		search: true,
+		search: false,
 		searchMaxSuggestions: 10,
 		activeHeaderLinks: false,
 		displayAllHeaders: true,
-		algolia: {
-			apiKey: '<API_KEY>',
-			indexName: '<INDEX_NAME>'
-		},
+		// algolia: {
+		// 	apiKey: '<API_KEY>',
+		// 	indexName: '<INDEX_NAME>'
+		// },
 		nav: [
-			{ text: 'Home', link: '/' },
+			// { text: 'Home', link: '/' },
 			{ text: 'Guide', link: '/guide/' },
 			{
 				text: 'Learn more',
 
 				items: [
-					{
-						text: 'Contributing Guide',
-						items: [
-							{
-								text: 'Contribute',
-								link: 'http://github.com/yoriiis/jsx/CONTRIBUTING.md'
-							}
-						]
-					},
 					{
 						text: 'Miscellaneous',
 						items: [
@@ -48,19 +39,20 @@ module.exports = {
 			},
 			{ text: 'Github', link: 'https://github.com/yoriiis/jsx' }
 		],
-		sidebar: [
-			{
-				title: 'Guide',
-				path: '/guide/',
-				collapsable: false,
-				sidebarDepth: 1,
-				children: [
-					['/guide/introduction', 'Introduction'],
-					['/guide/getting-started', 'Getting Started'],
-					['/guide/how-it-works', 'How it works'],
-					['/guide/jsx-features', 'JSX features']
-				]
-			}
-		]
+		sidebar: {
+			'/guide/': [
+				{
+					title: 'Guide',
+					collapsable: false,
+					sidebarDepth: 3,
+					children: [
+						'',
+						['getting-started', 'Getting started'],
+						['how-it-works', 'How it works'],
+						['jsx-features', 'JSX features']
+					]
+				}
+			]
+		}
 	}
 }

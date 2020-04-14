@@ -11,7 +11,7 @@ function triggerCustomEvent (e) {
 }
 
 function onCustomEventReceived (e) {
-	this.setAttribute('style', 'background-color: #272b30; color: #fff;')
+	this.classList.toggle('colored')
 }
 
 const InputComponent = props => (
@@ -24,20 +24,20 @@ const elements = (
 	<>
 		<section>
 			<h3 className="sectionTitle">Conditional</h3>
-			<p if={persons.length}>I'm visible</p>
-			<p if={persons.length === 0}>I'm invisible</p>
+			{/* <p if={persons.length}>I'm visible</p>
+			<p if={persons.length === 0}>I'm invisible</p> */}
 		</section>
-		<section style={{ backgroundColor: '#272b30', color: '#fff' }}>
+		{/* <section style={{ backgroundColor: '#272b30', color: '#fff' }}>
 			<h3 className="sectionTitle">HTML attributes</h3>
 			<p style="color: #ffe300;" class="text" id="text-1" data-type="content" aria-label="Text">
 				I've multiple `data-attribute`
 			</p>
-		</section>
-		<section>
+		</section> */}
+		{/* <section>
 			<h3 className="sectionTitle">Function component with props and events keyup</h3>
 			<InputComponent name={persons[1]} />
-		</section>
-		<section>
+		</section> */}
+		{/* <section>
 			<h3 className="sectionTitle">Loop</h3>
 			<ul>
 				{persons.map((name, index) => (
@@ -51,25 +51,19 @@ const elements = (
 					</li>
 				))}
 			</ul>
-		</section>
-		<section>
+		</section> */}
+		{/* <section>
 			<h3 className="sectionTitle">Test events click</h3>
-			<button
-				class="btn"
-				onClick={handleEvent}
-			>
+			<button class="btn" onClick={handleEvent}>
 				Submit
 			</button>
-		</section>
-		<section id="section-custom-event" onHello={onCustomEventReceived}>
+		</section> */}
+		{/* <section id="section-custom-event" onHello={onCustomEventReceived}>
 			<h3 className="sectionTitle">Test custom event</h3>
-			<button
-				class="btn"
-				onClick={triggerCustomEvent}
-			>
+			<button class="btn" onClick={triggerCustomEvent}>
 				Submit
 			</button>
-		</section>
+		</section> */}
 	</>
 )
 

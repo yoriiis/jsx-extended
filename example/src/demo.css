@@ -4,6 +4,18 @@ body {
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
+ul,
+li,
+p,
+h3 {
+    margin: 0;
+}
+
+ul {
+    list-style-position: inside;
+    text-align: left;
+}
+
 #app {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -13,9 +25,15 @@ body {
 section {
     border: 1px solid rgba(0, 0, 0, 0.3);
     padding: 20px;
+    text-align: center;
 
     .sectionTitle {
         text-align: center;
-        margin: 0;
+        margin-bottom: 20px;
+    }
+
+    &.colored {
+        background-color: #272b30;
+        color: #fff;
     }
 }

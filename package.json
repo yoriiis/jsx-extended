@@ -17,7 +17,7 @@
 		"build": "rollup -w -c rollup.config.js --environment NODE_ENV:production",
 		"build:example": "webpack --config=./example/webpack.config.js --mode=production",
 		"docs:build": "vuepress build docs",
-		"docs:dev": "vuepress dev docs",
+		"docs:dev": "vuepress dev docs --host localhost",
 		"start": "rollup -w -c rollup.config.js --environment NODE_ENV:development",
 		"start:example": "webpack --config=./example/webpack.config.js --mode=development",
 		"test": "jest",

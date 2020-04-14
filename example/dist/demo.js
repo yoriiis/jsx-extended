@@ -363,7 +363,7 @@ function triggerCustomEvent(e) {
 }
 
 function onCustomEventReceived(e) {
-  this.setAttribute('style', 'background-color: #272b30; color: #fff;');
+  this.classList.toggle('colored');
 }
 
 const InputComponent = props => _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("input", {
@@ -374,50 +374,9 @@ const InputComponent = props => _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["d
 });
 
 const persons = ['John Doe', 'Mickael Emphys', 'Henry pleyd'];
-const elements = _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement('fragment', null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("section", null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("h3", {
+const elements = _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("fragments", null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("section", null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("h3", {
   className: "sectionTitle"
-}, "Conditional"), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", {
-  if: persons.length
-}, "I'm visible"), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", {
-  if: persons.length === 0
-}, "I'm invisible")), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("section", {
-  style: {
-    backgroundColor: '#272b30',
-    color: '#fff'
-  }
-}, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("h3", {
-  className: "sectionTitle"
-}, "HTML attributes"), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", {
-  style: "color: #ffe300;",
-  class: "text",
-  id: "text-1",
-  "data-type": "content",
-  "aria-label": "Text"
-}, "I've multiple `data-attribute`")), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("section", null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("h3", {
-  className: "sectionTitle"
-}, "Function component with props and events keyup"), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement(InputComponent, {
-  name: persons[1]
-})), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("section", null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("h3", {
-  className: "sectionTitle"
-}, "Loop"), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("ul", null, persons.map((name, index) => _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("li", null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("label", null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("span", null, "Name ", _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("em", {
-  if: index === 0
-}, "I'm visible")), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement(InputComponent, {
-  if: index > 0,
-  name: name
-})))))), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("section", null, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("h3", {
-  className: "sectionTitle"
-}, "Test events click"), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("button", {
-  class: "btn",
-  onClick: handleEvent
-}, "Submit")), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("section", {
-  id: "section-custom-event",
-  onHello: onCustomEventReceived
-}, _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("h3", {
-  className: "sectionTitle"
-}, "Test custom event"), _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("button", {
-  class: "btn",
-  onClick: triggerCustomEvent
-}, "Submit")));
+}, "Conditional")));
 _dist_jsx_esm_js__WEBPACK_IMPORTED_MODULE_0__["default"].render(elements, document.getElementById('app'));
 
 /***/ })
