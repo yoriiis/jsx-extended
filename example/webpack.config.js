@@ -30,7 +30,10 @@ module.exports = (env, argv) => {
 					include: path.resolve(__dirname, './src'),
 					use: [
 						{
-							loader: 'babel-loader'
+							loader: 'babel-loader',
+							options: {
+								extends: path.resolve(__dirname, './babel.config.js')
+							}
 						}
 					]
 				},

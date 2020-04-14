@@ -1,17 +1,25 @@
 import { removeEmptyChildren } from './utils'
-import ManagerCondition from './managers/condition'
-import ManagerEvents from './managers/events'
-import ManagerDOMAttributes from './managers/dom-attributes'
-
-const managerCondition = new ManagerCondition()
-const managerEvents = new ManagerEvents()
-const managerDOMAttributes = new ManagerDOMAttributes()
+import checkCondition from './check-condition'
+import createEvents from './create-events'
+import createAttributes from './create-attributes'
 
 const EMPTY_NODE_VALUE = null
 
-export function createElement (tagName, attributes = {}, ...children) {
+/**
+ * Function called by Babel plugin "@babel/plugin-transform-react-jsx"
+ * Function name is used with "pragma: 'jsx.createElement'" options
+ * Each JSX elements (function, fragment, tag) call this function
+ *
+ * @param {String} tagName Name of the tag (h1, p, span, div, etc.)
+ * @param {Object} attributes Object contains name and value of JSX element's attributes
+ * @param {Array} children Childrens list of the element
+ *
+ * @returns {HTMLElement} Element transform from JSX to HTMLElement valid
+ * Element contains attributes and events listener
+ */
+export default function createElement (tagName, attributes = {}, ...children) {
 	// Check if element need to be passed
-	if (attributes !== null && managerCondition.check({ attributes }) === false) {
+	if (attributes !== null && checkCondition({ attributes }) === false) {
 		return EMPTY_NODE_VALUE
 	}
 
@@ -28,8 +36,8 @@ export function createElement (tagName, attributes = {}, ...children) {
 
 		// Build element attributes and events listeners
 		if (attributes !== null) {
-			managerDOMAttributes.create({ element, attributes })
-			managerEvents.create({ element, attributes })
+			createAttributes({ element, attributes })
+			createEvents({ element, attributes })
 		}
 	}
 

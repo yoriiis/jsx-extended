@@ -1,0 +1,24 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+#app {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+
+section {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 20px;
+}
+
+section .sectionTitle {
+        text-align: center;
+        margin: 0;
+    }
+
+
+/*# sourceMappingURL=main.css.map*/

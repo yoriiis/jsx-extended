@@ -94,236 +94,187 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
-	 true ? module.exports = factory() :
-	undefined;
-}(this, (function () { 'use strict';
+   true ? module.exports = factory() : undefined;
+})(this, function () {
+  'use strict';
 
-	// RegExp to detect attribute type
-	const EXPRESSION = {
-		condition: '^if$',
-		event: '^(on)([A-Z]{1}[a-z]+)+$',
-		domAttribute: '^(?!(on|if$))([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
-	};
+  const EXPRESSION = {
+    condition: '^if$',
+    event: '^(on)([A-Z]{1}[a-z]+)+$',
+    domAttribute: '^(?!(on|if$))([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
+  };
 
-	/**
-	 * Get attributes filtered by type
-	 * Type depends on expression type
-	 *
-	 * @param {Strign} type Attribute type
-	 * @param {Object} attributes Attributes list
-	 *
-	 * @returns {Array} Filtered attributes list by type
-	 */
-	function getAttributesByType (type, attributes) {
-		if (hasOwn(EXPRESSION, type)) {
-			const expression = EXPRESSION[type];
-			return Object.keys(attributes)
-				.filter(attribute => new RegExp(expression).test(attribute))
-				.map(attribute => ({
-					name: attribute.toLowerCase(),
-					value: attributes[attribute]
-				}))
-		} else {
-			return []
-		}
-	}
+  function getAttributesByType(type, attributes) {
+    if (hasOwn(EXPRESSION, type)) {
+      const expression = EXPRESSION[type];
+      return Object.keys(attributes).filter(attribute => new RegExp(expression).test(attribute)).map(attribute => ({
+        name: attribute.toLowerCase(),
+        value: attributes[attribute]
+      }));
+    } else {
+      return [];
+    }
+  }
+  /**
+   * Check whether an object has the property.
+   */
 
-	/**
-	 * Check whether an object has the property
-	 *
-	 * @param {Object} obj Object reference
-	 * @param {String} key Object property key inside the object
-	 *
-	 * @returns {Boolean} Object has the property key
-	 */
-	function hasOwn (obj, key) {
-		return Object.prototype.hasOwnProperty.call(obj, key)
-	}
 
-	/**
-	 * Set HTML attribute
-	 *
-	 * @param {HTMLElement} element Element to add the attribute
-	 * @param {Object} attribute Object contains name and value of the attribute
-	 */
-	function setAttribute (element, attribute) {
-		element.setAttribute(attribute.name, attribute.value);
-	}
+  const hasOwnProperty = Object.prototype.hasOwnProperty;
 
-	/**
-	 * Add event listener to a element
-	 *
-	 * @param {HTMLElement} element Element to add the event listener
-	 * @param {Object} attribute Object contains name and value of the event
-	 */
-	function addEventListener (element, attribute) {
-		element.addEventListener(attribute.name, attribute.value, false);
-	}
+  function hasOwn(obj, key) {
+    return hasOwnProperty.call(obj, key);
+  }
 
-	/**
-	 * Dispatch custom event listener
-	 *
-	 * @param {String} event Custom event name
-	 * @param {HTMLElement} element Element to add the custom event listener
-	 */
-	function dispatchEvent (event, element) {
-		element.dispatchEvent(new window.CustomEvent(event));
-	}
+  function setAttribute(element, attribute) {
+    element.setAttribute(attribute.name, attribute.value);
+  }
 
-	/**
-	 * Remove empty element in Array
-	 * Array contains HTMLCollection childs with null properties
-	 *
-	 * @param {Array} children Childrens list
-	 * @param {null} emptyValue Value of the empty children
-	 *
-	 * @returns {Array} Array clean without empty childrens
-	 */
-	function removeEmptyChildren (children, emptyValue) {
-		return children.filter(child => child !== emptyValue)
-	}
+  function addEventListener(element, attribute) {
+    element.addEventListener(attribute.name, attribute.value, false);
+  }
 
-	/**
-	 * Render HTMLElements into container
-	 *
-	 * @param {HTMLCollection} element HTMLCollection from JSX
-	 * @param {HTMLElement} container Container to append content
-	 */
-	function render (element, container) {
-		container.appendChild(element);
-	}
+  function dispatchEvent(event, element) {
+    element.dispatchEvent(new window.CustomEvent(event));
+  }
 
-	/**
-	 * Check if element contains "if" attribute
-	 * Attributes come from JSX attributes of the element
-	 *
-	 * @param {Object}
-	 * @param {Object} attributes Object contains name and value of JSX attributes
-	 */
-	function checkCondition ({ attributes }) {
-		const validAttribute = getAttributesByType('condition', attributes);
+  function removeEmptyChildren(children, emptyValue) {
+    return children.filter(child => child !== emptyValue);
+  }
 
-		// Return the attribute value if exist (true|false)
-		// Else undefined is returns
-		if (validAttribute.length) {
-			return validAttribute[0].value
-		}
-	}
+  function render(element, container) {
+    container.appendChild(element);
+  }
 
-	/**
-	 * Create events listener on element
-	 * Attributes come from JSX attributes of the element
-	 *
-	 * @param {Object}
-	 * @param {HTMLElement} element Element to add events listener
-	 * @param {Object} attributes Object contains name and value of JSX attributes
-	 */
-	function createEvents ({ element, attributes }) {
-		getAttributesByType('event', attributes)
-			.map(({ name, ...fields }) => ({
-				name: name.substr(2),
-				...fields
-			}))
-			.map(attribute => addEventListener(element, attribute));
-	}
+  class ManagerCondition {
+    check({
+      attributes
+    }) {
+      const validAttribute = getAttributesByType('condition', attributes);
 
-	/**
-	 * Create HTML attributes on element
-	 * Attributes come from JSX attributes of the element
-	 *
-	 * @param {Object}
-	 * @param {HTMLElement} element Element to add attributes
-	 * @param {Object} attributes Object contains name and value of JSX attributes
-	 */
-	function createAttributes ({ element, attributes }) {
-		const attrs = getAttributesByType('domAttribute', attributes);
-		attrs
-			.map(({ name, value }) => ({
-				name: name === 'classname' ? 'class' : name,
-				value
-			}))
-			.map(({ name, value }) => {
-				if (name === 'style' && value instanceof Object) {
-					// Style properties as object
-					// Add all style properties on node property
-					Object.keys(value).map(property => (element.style[property] = value[property]));
-				} else if (name === 'dataset') {
-					if (value instanceof Object && !Array.isArray(value)) {
-						// Dataset properties as object
-						// Add all key as dataset property
-						Object.keys(value).map(key => {
-							element.dataset[key] = value[key];
-						});
-					}
-				} else {
-					// Basic HTML attribute
-					setAttribute(element, { name, value });
-				}
-			});
-	}
+      if (validAttribute.length) {
+        return validAttribute[0].value;
+      }
+    }
 
-	const EMPTY_NODE_VALUE = null;
+  }
 
-	/**
-	 * Function called by Babel plugin "@babel/plugin-transform-react-jsx"
-	 * Function name is used with "pragma: 'jsx.createElement'" options
-	 * Each JSX elements (function, fragment, tag) call this function
-	 *
-	 * @param {String} tagName Name of the tag (h1, p, span, div, etc.)
-	 * @param {Object} attributes Object contains name and value of JSX element's attributes
-	 * @param {Array} children Childrens list of the element
-	 *
-	 * @returns {HTMLElement} Element transform from JSX to HTMLElement valid
-	 * Element contains attributes and events listener
-	 */
-	function createElement (tagName, attributes = {}, ...children) {
-		// Check if element need to be passed
-		if (attributes !== null && checkCondition({ attributes }) === false) {
-			return EMPTY_NODE_VALUE
-		}
+  class ManagerEvents {
+    create({
+      element,
+      attributes
+    }) {
+      getAttributesByType('event', attributes).map(({
+        name,
+        ...fields
+      }) => ({
+        name: name.substr(2),
+        ...fields
+      })).map(attribute => addEventListener(element, attribute));
+    }
 
-		let element;
-		if (tagName instanceof Function) {
-			// Function component
-			element = tagName(attributes || {});
-		} else if (tagName === 'fragment') {
-			// Fragment component
-			element = document.createDocumentFragment();
-		} else {
-			// HTML tags
-			element = document.createElement(tagName);
+  }
 
-			// Build element attributes and events listeners
-			if (attributes !== null) {
-				createAttributes({ element, attributes });
-				createEvents({ element, attributes });
-			}
-		}
+  class ManagerDOMAttributes {
+    create({
+      element,
+      attributes
+    }) {
+      const attrs = getAttributesByType('domAttribute', attributes);
+      attrs.map(({
+        name,
+        value
+      }) => ({
+        name: name === 'classname' ? 'class' : name,
+        value
+      })).map(({
+        name,
+        value
+      }) => {
+        if (name === 'style' && value instanceof Object) {
+          // Style properties as object
+          // Add all style properties on node property
+          Object.keys(value).map(property => element.style[property] = value[property]);
+        } else if (name === 'dataset') {
+          if (value instanceof Object && !Array.isArray(value)) {
+            // Dataset properties as object
+            // Add all key as dataset property
+            Object.keys(value).map(key => {
+              element.dataset[key] = value[key];
+            });
+          }
+        } else {
+          // Basic HTML attribute
+          setAttribute(element, {
+            name,
+            value
+          });
+        }
+      });
+    }
 
-		const cleanChildren = removeEmptyChildren(children, EMPTY_NODE_VALUE);
-		for (const child of cleanChildren) {
-			// Check if direct child is not EMPTY_NODE_VALUE
-			if (child !== EMPTY_NODE_VALUE) {
-				if (Array.isArray(child)) {
-					// Check if sub child is not EMPTY_NODE_VALUE
-					const cleanSubChildren = removeEmptyChildren(child, EMPTY_NODE_VALUE);
-					element.append(...cleanSubChildren);
-				} else element.append(child);
-			}
-		}
-		return element
-	}
+  }
 
-	var index = {
-		render,
-		createElement,
-		dispatchEvent
-	};
+  const managerCondition = new ManagerCondition();
+  const managerEvents = new ManagerEvents();
+  const managerDOMAttributes = new ManagerDOMAttributes();
+  const EMPTY_NODE_VALUE = null;
 
-	return index;
+  function createElement(tagName, attributes = {}, ...children) {
+    // Check if element need to be passed
+    if (attributes !== null && managerCondition.check({
+      attributes
+    }) === false) {
+      return EMPTY_NODE_VALUE;
+    }
 
-})));
+    let element;
 
+    if (tagName instanceof Function) {
+      // Function component
+      element = tagName(attributes || {});
+    } else if (tagName === 'fragment') {
+      // Fragment component
+      element = document.createDocumentFragment();
+    } else {
+      // HTML tags
+      element = document.createElement(tagName); // Build element attributes and events listeners
+
+      if (attributes !== null) {
+        managerDOMAttributes.create({
+          element,
+          attributes
+        });
+        managerEvents.create({
+          element,
+          attributes
+        });
+      }
+    }
+
+    const cleanChildren = removeEmptyChildren(children, EMPTY_NODE_VALUE);
+
+    for (const child of cleanChildren) {
+      // Check if direct child is not EMPTY_NODE_VALUE
+      if (child !== EMPTY_NODE_VALUE) {
+        if (Array.isArray(child)) {
+          // Check if sub child is not EMPTY_NODE_VALUE
+          const cleanSubChildren = removeEmptyChildren(child, EMPTY_NODE_VALUE);
+          element.append(...cleanSubChildren);
+        } else element.append(child);
+      }
+    }
+
+    return element;
+  }
+
+  var index = {
+    render,
+    createElement,
+    dispatchEvent
+  };
+  return index;
+});
 
 /***/ }),
 
@@ -424,4 +375,4 @@ Object(_dist_jsx__WEBPACK_IMPORTED_MODULE_0__["render"])(elements, document.getE
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map
+//# sourceMappingURL=main.js.map

@@ -1,10 +1,5 @@
-import { dispatchEvent } from './utils'
-import { render } from './render'
-import { createElement } from './create-element'
-
-export { dispatchEvent }
-export { render }
-export { createElement }
+import { render, dispatchEvent } from './utils'
+import createElement from './create-element'
 
 export default {
 	render,
