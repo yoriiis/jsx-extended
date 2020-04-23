@@ -14,6 +14,8 @@ features:
 footer: MIT Licensed | Copyright © 2020 Yoriiis
 ---
 
+# Easy install
+
 ```bash
-yarn add jsx
+npm install add jsx --save-dev
 ```

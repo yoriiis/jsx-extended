@@ -65,7 +65,7 @@ Template literals are not optimized for large string components and indentation 
 
 JSX is more easy to write and the template can grow without problem. Events listeners are automatically managed but conditions and custom events are missing.
 
-## Without React?
+## Without React
 
 Yes! With `jsx`, JSX can be used without React with only the support of the Babel plugin `@babel/plugin-transform-react-jsx` to enabling JSX parsing. Main JSX features available in React are available without React, simply.
 

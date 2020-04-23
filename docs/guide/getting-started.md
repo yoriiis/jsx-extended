@@ -11,14 +11,13 @@ First, install the library from [npm](https://www.npmjs.com/package/jsx).
 In the folowing example we will use `npm` for installation but you can use `yarn` if you prefer.
 
 ```bash
-npm i --save-dev jsx
+npm install jsx --save-dev
 ```
-
 
 Next, install the Babel plugin `@babel/plugin-transform-react-jsx` to allows JSX parsing inside your code.
 
 ```bash
-npm i --save-dev @babel/plugin-transform-react-jsx
+npm install @babel/plugin-transform-react-jsx --save-dev
 ```
 
 ### Babel configuration
