@@ -5,6 +5,82 @@ export const EXPRESSION = {
 	domAttribute: '^(?!(on|if$))([a-z]+|[a-z]+([A-Z]{1}[a-z]+)+|data(-[a-z]+)+|aria-[a-z]+)$'
 }
 
+// List of SVG tags
+export const SVG_TAGS = {
+	animate: 'animate',
+	animateMotion: 'animateMotion',
+	animateTransform: 'animateTransform',
+	circle: 'circle',
+	clipPath: 'clipPath',
+	'color-profile': 'color-profile',
+	defs: 'defs',
+	desc: 'desc',
+	discard: 'discard',
+	ellipse: 'ellipse',
+	feBlend: 'feBlend',
+	feColorMatrix: 'feColorMatrix',
+	feComponentTransfer: 'feComponentTransfer',
+	feComposite: 'feComposite',
+	feConvolveMatrix: 'feConvolveMatrix',
+	feDiffuseLighting: 'feDiffuseLighting',
+	feDisplacementMap: 'feDisplacementMap',
+	feDistantLight: 'feDistantLight',
+	feDropShadow: 'feDropShadow',
+	feFlood: 'feFlood',
+	feFuncA: 'feFuncA',
+	feFuncB: 'feFuncB',
+	feFuncG: 'feFuncG',
+	feFuncR: 'feFuncR',
+	feGaussianBlur: 'feGaussianBlur',
+	feImage: 'feImage',
+	feMerge: 'feMerge',
+	feMergeNode: 'feMergeNode',
+	feMorphology: 'feMorphology',
+	feOffset: 'feOffset',
+	fePointLight: 'fePointLight',
+	feSpecularLighting: 'feSpecularLighting',
+	feSpotLight: 'feSpotLight',
+	feTile: 'feTile',
+	feTurbulence: 'feTurbulence',
+	filter: 'filter',
+	foreignObject: 'foreignObject',
+	g: 'g',
+	hatch: 'hatch',
+	hatchpath: 'hatchpath',
+	image: 'image',
+	line: 'line',
+	linearGradient: 'linearGradient',
+	marker: 'marker',
+	mask: 'mask',
+	mesh: 'mesh',
+	meshgradient: 'meshgradient',
+	meshpatch: 'meshpatch',
+	meshrow: 'meshrow',
+	metadata: 'metadata',
+	mpath: 'mpath',
+	path: 'path',
+	pattern: 'pattern',
+	polygon: 'polygon',
+	polyline: 'polyline',
+	radialGradient: 'radialGradient',
+	rect: 'rect',
+	script: 'script',
+	set: 'set',
+	solidcolor: 'solidcolor',
+	stop: 'stop',
+	style: 'style',
+	svg: 'svg',
+	switch: 'switch',
+	symbol: 'symbol',
+	text: 'text',
+	textPath: 'textPath',
+	title: 'title',
+	tspan: 'tspan',
+	unknown: 'unknown',
+	use: 'use',
+	view: 'view'
+}
+
 /**
  * Get attributes filtered by type
  * Type depends on expression type
@@ -14,13 +90,13 @@ export const EXPRESSION = {
  *
  * @returns {Array} Filtered attributes list by type
  */
-export function getAttributesByType (type, attributes) {
+export function getAttributesByType (type, attributes, isSvg = false) {
 	if (hasOwn(EXPRESSION, type)) {
 		const expression = EXPRESSION[type]
 		return Object.keys(attributes)
-			.filter(attribute => new RegExp(expression).test(attribute))
+			.filter(attribute => (isSvg ? attribute : new RegExp(expression).test(attribute)))
 			.map(attribute => ({
-				name: attribute.toLowerCase(),
+				name: isSvg ? attribute : attribute.toLowerCase(),
 				value: attributes[attribute]
 			}))
 	} else {

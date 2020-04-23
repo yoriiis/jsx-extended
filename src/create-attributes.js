@@ -8,8 +8,9 @@ import { getAttributesByType, setAttribute } from './utils'
  * @param {HTMLElement} element Element to add attributes
  * @param {Object} attributes Object contains name and value of JSX attributes
  */
-export default function createAttributes ({ element, attributes }) {
-	const attrs = getAttributesByType('domAttribute', attributes)
+export default function createAttributes ({ element, attributes, isSvg }) {
+	const attrs = getAttributesByType('domAttribute', attributes, isSvg)
+
 	attrs
 		.map(({ name, value }) => ({
 			name: name === 'classname' ? 'class' : name,

@@ -1,4 +1,4 @@
-import { removeEmptyChildren } from './utils'
+import { removeEmptyChildren, SVG_TAGS, hasOwn } from './utils'
 import checkCondition from './check-condition'
 import createEvents from './create-events'
 import createAttributes from './create-attributes'
@@ -31,12 +31,18 @@ export default function createElement (tagName, attributes = {}, ...children) {
 		// Fragment component
 		element = document.createDocumentFragment()
 	} else {
-		// HTML tags
-		element = document.createElement(tagName)
+		const isSvg = hasOwn(SVG_TAGS, tagName)
+		if (isSvg) {
+			// SVG tags
+			element = document.createElementNS('http://www.w3.org/2000/svg', tagName)
+		} else {
+			// HTML tags
+			element = document.createElement(tagName)
+		}
 
 		// Build element attributes and events listeners
 		if (attributes !== null) {
-			createAttributes({ element, attributes })
+			createAttributes({ element, attributes, isSvg })
 			createEvents({ element, attributes })
 		}
 	}
