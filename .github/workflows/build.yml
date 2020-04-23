@@ -1,4 +1,4 @@
-name: CI
+name: build
 
 on:
   push
@@ -40,5 +40,5 @@ jobs:
       - name: Build
         run: |
           npm run build
-          npm run build:examples
+          npm run build:example
           npm run docs:build
