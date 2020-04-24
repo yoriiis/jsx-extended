@@ -6,7 +6,7 @@ const name = 'jsx-extended'
 
 const banner =
 	'/*!\n' +
-	` * jsxCreateElement.js v${pkg.version}\n` +
+	` * JSX Extended v${pkg.version}\n` +
 	` * (c) 2020-${new Date().getFullYear()} Yoriiis\n` +
 	' * Released under the MIT License.\n' +
 	' */'

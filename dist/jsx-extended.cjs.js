@@ -1,5 +1,5 @@
 /*!
- * jsxCreateElement.js v1.0.0
+ * JSX Extended v1.0.0
  * (c) 2020-2020 Yoriiis
  * Released under the MIT License.
  */

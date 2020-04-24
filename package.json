@@ -11,6 +11,7 @@
 	"module": "dist/jsx-extended.esm.js",
 	"scripts": {
 		"build": "rm -rf dist && rollup -c rollup.config.js --environment NODE_ENV:production",
+		"build:all": "npm run build && npm run build:example",
 		"build:example": "rm -rf example/dist && webpack --config=./example/webpack.config.js --mode=production",
 		"docs:build": "vuepress build docs",
 		"docs:dev": "vuepress dev docs --host localhost",

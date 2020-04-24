@@ -1,6 +1,6 @@
 # JSX Extended
 
-![jsxExtended](https://img.shields.io/badge/jsx-extended-master-001935.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/jsx-extended/Build/master?style=for-the-badge)
+![jsxExtended](https://img.shields.io/badge/jsx--extended-master-001935.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/jsx-extended/ci/master?style=for-the-badge)
 
 ## Introduction
 
