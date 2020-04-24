@@ -1,5 +1,5 @@
 /*!
- * JSX.js v1.0.0
+ * jsxCreateElement.js v1.0.0
  * (c) 2020-2020 Yoriiis
  * Released under the MIT License.
  */
@@ -302,10 +302,4 @@ function createElement (tagName, attributes = {}, ...children) {
 	return element
 }
 
-const jsx = {
-	render,
-	createElement,
-	dispatchEvent
-};
-
-export default jsx;
+export { createElement, dispatchEvent, render };

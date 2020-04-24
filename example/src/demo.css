@@ -4,11 +4,16 @@ body {
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 ul,
 li,
 p,
 h3 {
     margin: 0;
+    padding: 0;
 }
 
 ul {

@@ -1,9 +1,11 @@
 /*!
- * JSX.js v1.0.0
+ * jsxCreateElement.js v1.0.0
  * (c) 2020-2020 Yoriiis
  * Released under the MIT License.
  */
 'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 // RegExp to detect attribute type
 const EXPRESSION = {
@@ -304,10 +306,6 @@ function createElement (tagName, attributes = {}, ...children) {
 	return element
 }
 
-const jsx = {
-	render,
-	createElement,
-	dispatchEvent
-};
-
-module.exports = jsx;
+exports.createElement = createElement;
+exports.dispatchEvent = dispatchEvent;
+exports.render = render;

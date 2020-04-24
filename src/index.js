@@ -1,9 +1,2 @@
-import { render, dispatchEvent } from './utils'
-import createElement from './create-element'
-
-const jsx = {
-	render,
-	createElement,
-	dispatchEvent
-}
-export default jsx
+export { render, dispatchEvent } from './utils'
+export { default as createElement } from './create-element'

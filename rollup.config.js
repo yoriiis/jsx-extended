@@ -6,7 +6,7 @@ const name = 'jsx'
 
 const banner =
 	'/*!\n' +
-	` * JSX.js v${pkg.version}\n` +
+	` * jsxCreateElement.js v${pkg.version}\n` +
 	` * (c) 2020-${new Date().getFullYear()} Yoriiis\n` +
 	' * Released under the MIT License.\n' +
 	' */'
@@ -20,13 +20,6 @@ export default async () => ({
 			banner,
 			file: 'dist/jsx.cjs.js',
 			format: 'cjs',
-			name
-		},
-		{
-			// UMD, used by Node.js or Browser
-			banner,
-			file: 'dist/jsx.umd.js',
-			format: 'umd',
 			name
 		},
 		{

@@ -1,13 +1,13 @@
-import jsx from '../../dist/jsx.esm.js'
+import { createElement, render, dispatchEvent } from '../../dist/jsx.esm.js'
 import './demo.css'
-
+console.log(createElement, render, dispatchEvent)
 function handleEvent (e) {
 	console.log('event', e.type, this)
 }
 
 function triggerCustomEvent (e) {
 	console.log('triggerCustomEvent', e.type, this)
-	jsx.dispatchEvent('hello', document.querySelector('#section-custom-event'))
+	dispatchEvent('hello', document.querySelector('#section-custom-event'))
 }
 
 function onCustomEventReceived (e) {
@@ -71,4 +71,4 @@ const elements = (
 	</>
 )
 
-jsx.render(elements, document.getElementById('app'))
+render(elements, document.getElementById('app'))
