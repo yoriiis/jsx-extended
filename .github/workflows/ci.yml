@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
 
@@ -41,4 +42,44 @@ jobs:
         run: |
           npm run build
           npm run build:example
-          npm run docs:build
+
+      - name: Create demo
+        run: |
+          mkdir demo
+          mv example/dist demo/dist
+          mv example/index.html demo/index.html
+
+      - name: Upload demo artifacts
+        uses: actions/upload-artifact@v1
+        if: github.ref == 'refs/heads/master' &&
+            github.repository == 'yoriiis/jsx' &&
+            github.event_name != 'pull_request'
+        with:
+          name: demo
+          path: demo
+
+  deploy-gh-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build
+    if: success() &&
+        github.ref == 'refs/heads/master' &&
+        github.repository == 'yoriiis/jsx' &&
+        github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download example artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: demo
+
+      - name: Deploy to Github Pages
+        uses: crazy-max/ghaction-github-pages@v1
+        with:
+          target_branch: gh-pages
+          build_dir: demo
+          keep_history: true
+          commit_message: "Deploy to GitHub pages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -31,7 +31,17 @@
 		"last 2 version"
 	],
 	"prettier": {
-		"printWidth": 100
+		"printWidth": 100,
+		"overrides": [
+			{
+				"files": "*.md",
+				"options": {
+					"proseWrap": "preserve",
+					"tabWidth": 2,
+					"useTabs": false
+				}
+			}
+		]
 	},
 	"eslintConfig": {
 		"env": {

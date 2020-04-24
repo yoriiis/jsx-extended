@@ -4,13 +4,17 @@
 
 ## Introduction
 
+> The current repository expose an extended and standalone usage of JSX without any framework. Extra features like custom event listeners and conditional statements are added.
+>
+> Severals libraries already exist on npm, use this to inspire you.
+
 Write templating in Javascript with the power of **JSX** without any framework built-in.
 
-Web frameworks are trended, reactive and perfects for building complex single-page applications but sometimes a little overkills for your purposes. For better performance it is often more optimized to write the Javascript in vanilla to avoid an extra size of the final bundles and fastest render.
+Web frameworks are trended, reactive and perfects for building complex single-page applications but sometimes a little overkills for your purposes. For better performance it is often more optimized to write native Javascript to avoid an extra size of the final bundles and fastest render.
 
 Introduced in ES2015, aka ES6, Template Literals offer a new way to declare strings but can be complex with multiple components, loops and deep conditions.
 
-JSX introduced by React works perfectly with React but in standalone, the usage is more complicated.
+JSX introduced by React works perfectly with React but in standalone, the usage is more complicated. Also, features like custom event listeners and conditional statements are not available.
 
 Let's quickly look at the solutions available to us.
 
@@ -18,49 +22,59 @@ Let's quickly look at the solutions available to us.
 
 Small example of component with template literals syntax, condition and loop, render in the `#app` element.
 
-```js
-const list = ['Apple', 'Pear', 'Watermelon', 'Cherry'];
+```jsx
+const list = ["Apple", "Pear", "Watermelon", "Cherry"];
 
 const html = `<section
                     <h3>Some good fruits</h3>
-                    ${list.length ? `
+                    ${
+                      list.length
+                        ? `
                         <ul>
-                            ${list.map(item => `
+                            ${list.map(
+                              item => `
                                 <li>${item}</li>
-                            `)}
+                            `
+                            )}
                         </ul>`
-                    : ''}
+                        : ""
+                    }
                 </section>`;
 
-document.querySelector('#app').insertAdjacentHTML('beforeend', html);
+document.querySelector("#app").insertAdjacentHTML("beforeend", html);
 ```
 
 ### JSX
 
 The same example with JSX syntax.
 
-```jsx
-const list = ['Apple', 'Pear', 'Watermelon', 'Cherry'];
+```js
+const list = ["Apple", "Pear", "Watermelon", "Cherry"];
 
-function List(props){
-    if(props.items.length === 0){
-        return null
-    }
-    return (<ul>
-                ${props.items.map(item => `
+function List(props) {
+  if (props.items.length === 0) {
+    return null;
+  }
+  return (
+    <ul>
+      $
+      {props.items.map(
+        item => `
                     <li>${item}</li>
-                `)}
-            </ul>);
+                `
+      )}
+    </ul>
+  );
 }
 
 const html = (
-    <section>
-        <h3>Some good fruits</h3>
-        <List items={list} />
-    </section>
-)
+  <section>
+    <h3>Some good fruits</h3>
+    <List items={list} />
+  </section>
+);
 
-document.querySelector('#app').insertAdjacentHTML('beforeend', html);
+document.querySelector("#app").insertAdjacentHTML("beforeend", html);
 ```
 
 ### Limitation
@@ -71,36 +85,36 @@ JSX is more easy to write and the template can grow without problem. Events list
 
 ### Without React
 
-Yes! With `jsxCreateElement`, JSX can be used without React with only the support of the Babel plugin `@babel/plugin-transform-react-jsx` to enabling JSX parsing. Main JSX features available in React are available without React, simply.
+Yes! JSX can be used without React with the support of the Babel plugin `@babel/plugin-transform-react-jsx` to enabling JSX parsing and a custom `createElement` function.
 
 ### Features
 
 Popular JSX feature inside React are available with somes extra features.
 
-* Usage out of React in standalone
-* Single Babel plugin for JSX parsing
-* No extra frameworks
-* Functional component
-* Fragment component
-* Events listener with attributes
-* Custom event listener with attributes
-* HTML attributes
-* Conditional rendering
-* SVG support
+- Usage out of React in standalone
+- Single Babel plugin for JSX parsing
+- No extra frameworks
+- Functional component
+- Fragment component
+- Events listener with attributes
+- Custom event listener with attributes
+- HTML attributes
+- Conditional rendering
+- SVG support
+
+## Demo
+
+Online demo is available on [yoriiis.github.io/jsx](https://yoriiis.github.io/jsx)
+
+The project includes also example of implementation in the directory `./example/`.
 
 ## Getting started
-
-jsxCreateElement works with a minimalist client Javascript library and a Babel plugin inherit from React.
 
 ### Installation
 
 #### Dependencies
 
-First, install the library from [npm](https://www.npmjs.com/package/jsx-create-element).
-
-```bash
-npm install jsx-create-element --save-dev
-```
+First, import the library from the `./dist/` directory.
 
 Next, install the Babel plugin `@babel/plugin-transform-react-jsx` to allows JSX parsing inside your code.
 
@@ -114,19 +128,19 @@ Update the Babel configuration file with the following options.
 
 ```js
 const plugins = [
-    [
-        '@babel/plugin-transform-react-jsx',
-        {
-            pragma: 'createElement',
-            pragmaFrag: '"fragment"'
-        }
-    ]
-]
+  [
+    "@babel/plugin-transform-react-jsx",
+    {
+      pragma: "createElement",
+      pragmaFrag: '"fragment"'
+    }
+  ]
+];
 ```
 
 ##### Pragma
 
-Replace the function used when compiling JSX expressions. Use `createElement`. The function is exposed by jsxCreateElement.
+Replace the function used when compiling JSX expressions. Use `createElement`. The function is exposed by the library.
 
 ##### pragmaFrag
 
@@ -136,16 +150,105 @@ Replace the component used when compiling JSX fragments. Use simply `"fragment"`
 
 ## How it works
 
-Now dependencies and configuration are done, let's write some JSX.
-
 ### HTML attributes
 
-* camelCase syntax for all HTML attributes, except for `data-*`, `dataset` and `aria-*`
-* `class` or `className`
-* `dataset` with object datas
+- camelCase syntax for all HTML attributes, except for `data-*`, `dataset` and `aria-*` and SVG tags
+- `class` or `className` attributes
+- `dataset` with object datas
 
-## Licence
+### Condition
 
-`webpackBoilerplate` is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+Conditional statements can be achieve with `if` attribute.
+
+```javascript
+const persons = ["John Doe", "Mickael Emphys", "Henry pleyd"];
+```
+
+```jsx
+<div if={persons.length}>I'm visible</div>
+```
+
+### Event listeners
+
+Event listeners can be achieve with the events from object property syntax.
+
+```javascript
+function handleEvent(e) {
+  console.log("Button clicked");
+}
+```
+
+```jsx
+<button onClick={handleEvent}>Submit</button>
+```
+
+### Custom event listeners
+
+Custom event listeners can be achieve like native event listeners.
+
+```jsx
+<button id="button" onHello={handleCustomEvent}>
+  Submit
+</button>
+```
+
+Dispatch the custom event with the `dispatchEvent` function.
+
+```javascript
+dispatchEvent("hello", document.querySelector("#button"));
+```
+
+### Fragment
+
+Fragments look like empty JSX tags. They let you group a list of children without adding extra nodes to the DOM:
+
+```javascript
+const element = (
+  <>
+    Some text.
+    <h2>A heading</h2>
+  </>
+);
+```
+
+### SVG support
+
+SVG tags are functional, the list below includes supported tags.
+
+```text
+animate animateMotion animateTransform circle clipPath color-profil defs desc discard ellipse feBlend feColorMatrix feComponentTransfer feComposite feConvolveMatrix feDiffuseLighting feDisplacementMap feDistantLight feDropShadow feFlood feFuncA feFuncB feFuncG feFuncR feGaussianBlur feImage feMerge feMergeNode feMorphology feOffset fePointLight feSpecularLighting feSpotLight feTile feTurbulence filter foreignObject g hatch hatchpath image line linearGradient marker mask mesh meshgradient meshpatch meshrow metadata mpath path pattern polygon polyline radialGradient rect script set solidcolor stop style svg switch symbol text textPath title tspan unknown use view
+```
+
+## Available methods
+
+### createElement
+
+The `createElement` function is used by the Babel plugin `@babel/plugin-transform-react-jsx`. Import the function on the top of each JSX files.
+
+```javascript
+import { createElement } from "../../dist/jsx.esm.js";
+```
+
+### render
+
+The `render` function inject JSX elements into the DOM.
+
+```javascript
+render(<div>Hello</div>, document.getElementById("app"));
+```
+
+### dispatchEvent
+
+The `dispatchEvent` function dispatch custom event listeners.
+
+```jsx
+import { dispatchEvent } from "../../dist/jsx.esm.js";
+
+dispatchEvent("hello", document.querySelector("#button"));
+```
+
+## License
+
+`jsxCreateElement` is licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
 Created with ♥ by [@yoriiis](http://github.com/yoriiis).
