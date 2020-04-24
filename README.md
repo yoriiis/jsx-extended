@@ -1,6 +1,6 @@
 # JSX Extended
 
-![jsxExtended](https://img.shields.io/badge/jsx-create-element-master-001935.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/jsx-create-element/Build/master?style=for-the-badge)
+![jsxExtended](https://img.shields.io/badge/jsx-extended-master-001935.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/jsx-extended/Build/master?style=for-the-badge)
 
 ## Introduction
 
@@ -22,59 +22,53 @@ Let's quickly look at the solutions available to us.
 
 Small example of component with template literals syntax, condition and loop, render in the `#app` element.
 
-```jsx
+```javascript
 const list = ["Apple", "Pear", "Watermelon", "Cherry"];
 
-const html = `<section
+/* prettier-ignore */
+const elements = `<section
                     <h3>Some good fruits</h3>
-                    ${
-                      list.length
-                        ? `
+                    ${list.length ? `
                         <ul>
-                            ${list.map(
-                              item => `
+                            ${list.map(item => `
                                 <li>${item}</li>
-                            `
-                            )}
-                        </ul>`
-                        : ""
-                    }
+                            `)}
+                        </ul>
+                    ` : ""}
                 </section>`;
 
-document.querySelector("#app").insertAdjacentHTML("beforeend", html);
+document.getElementById("#app").insertAdjacentHTML("beforeend", elements);
 ```
 
 ### JSX
 
 The same example with JSX syntax.
 
-```js
+```javascript
 const list = ["Apple", "Pear", "Watermelon", "Cherry"];
 
+/* prettier-ignore */
 function List(props) {
   if (props.items.length === 0) {
     return null;
   }
   return (
     <ul>
-      $
-      {props.items.map(
-        item => `
-                    <li>${item}</li>
-                `
-      )}
+        ${props.items.map(item => `
+            <li>${item}</li>
+        `)}
     </ul>
   );
 }
 
-const html = (
+const elements = (
   <section>
     <h3>Some good fruits</h3>
     <List items={list} />
   </section>
 );
 
-document.querySelector("#app").insertAdjacentHTML("beforeend", html);
+document.getElementById("#app").insertAdjacentHTML("beforeend", elements);
 ```
 
 ### Limitation
@@ -102,11 +96,35 @@ Popular JSX feature inside React are available with somes extra features.
 - Conditional rendering
 - SVG support
 
+### JSX extended example
+
+The same example with JSX extended syntax.
+
+```javascript
+import { createElement, render } from "../../dist/jsx-extended.esm.js";
+
+const list = ["Apple", "Pear", "Watermelon", "Cherry"];
+
+/* prettier-ignore */
+const elements = (
+  <section>
+    <h3>Some good fruits</h3>
+    <ul if={items.length > 0}>
+        ${items.map(item => `
+            <li>${item}</li>
+        `)}
+    </ul>
+  </section>
+);
+
+render(elements, document.getElementById("#app"));
+```
+
 ## Demo
 
-Online demo is available on [yoriiis.github.io/jsx](https://yoriiis.github.io/jsx)
+Online demo is available on [yoriiis.github.io/jsx-extended](https://yoriiis.github.io/jsx-extended)
 
-The project includes also example of implementation in the directory `./example/`.
+The project includes also example of implementation in the `./example/` directory.
 
 ## Getting started
 
@@ -114,7 +132,9 @@ The project includes also example of implementation in the directory `./example/
 
 #### Dependencies
 
-First, import the library from the `./dist/` directory.
+First, import the library from the `./dist/jsx-extended.esm.js`.
+
+> ESM and CJS exports are available in the `./dist/` directory
 
 Next, install the Babel plugin `@babel/plugin-transform-react-jsx` to allows JSX parsing inside your code.
 
@@ -126,7 +146,7 @@ npm install @babel/plugin-transform-react-jsx --save-dev
 
 Update the Babel configuration file with the following options.
 
-```js
+```javascript
 const plugins = [
   [
     "@babel/plugin-transform-react-jsx",
@@ -158,7 +178,7 @@ Replace the component used when compiling JSX fragments. Use simply `"fragment"`
 
 ### Condition
 
-Conditional statements can be achieve with `if` attribute.
+Conditional statements can be achieve with the `if` attribute.
 
 ```javascript
 const persons = ["John Doe", "Mickael Emphys", "Henry pleyd"];
@@ -195,7 +215,7 @@ Custom event listeners can be achieve like native event listeners.
 Dispatch the custom event with the `dispatchEvent` function.
 
 ```javascript
-dispatchEvent("hello", document.querySelector("#button"));
+dispatchEvent("hello", document.getElementById("#button"));
 ```
 
 ### Fragment
@@ -234,7 +254,10 @@ import { createElement } from "../../dist/jsx-extended.esm.js";
 The `render` function inject JSX elements into the DOM.
 
 ```javascript
-render(<div>Hello</div>, document.getElementById("app"));
+import { render } from "../../dist/jsx-extended.esm.js";
+
+const elements = <div>Hello</div>;
+render(elements, document.getElementById("app"));
 ```
 
 ### dispatchEvent
@@ -244,7 +267,7 @@ The `dispatchEvent` function dispatch custom event listeners.
 ```jsx
 import { dispatchEvent } from "../../dist/jsx-extended.esm.js";
 
-dispatchEvent("hello", document.querySelector("#button"));
+dispatchEvent("hello", document.getElementById("#button"));
 ```
 
 ## License
