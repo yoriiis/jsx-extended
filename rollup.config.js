@@ -2,7 +2,7 @@ import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const name = 'jsx'
+const name = 'jsx-extended'
 
 const banner =
 	'/*!\n' +
@@ -18,7 +18,7 @@ export default async () => ({
 		{
 			// CommonJS, used by Node.js or bundlers e.g. Webpack, Browserify, Rollup
 			banner,
-			file: 'dist/jsx.cjs.js',
+			file: 'dist/jsx-extended.cjs.js',
 			format: 'cjs',
 			name
 		},

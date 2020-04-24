@@ -52,7 +52,7 @@ jobs:
       - name: Upload demo artifacts
         uses: actions/upload-artifact@v1
         if: github.ref == 'refs/heads/master' &&
-            github.repository == 'yoriiis/jsx' &&
+            github.repository == 'yoriiis/jsx-extended' &&
             github.event_name != 'pull_request'
         with:
           name: demo
@@ -64,7 +64,7 @@ jobs:
     needs: build
     if: success() &&
         github.ref == 'refs/heads/master' &&
-        github.repository == 'yoriiis/jsx' &&
+        github.repository == 'yoriiis/jsx-extended' &&
         github.event_name != 'pull_request'
     steps:
       - uses: actions/checkout@v2

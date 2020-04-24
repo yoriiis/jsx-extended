@@ -7,15 +7,11 @@
 	"repository": "https://github.com/yoriiis/webpack-boilerplate.git",
 	"license": "MIT",
 	"author": "Yoriiis aka Joris DANIEL",
-	"files": [
-		"src",
-		"dist/*.js"
-	],
-	"main": "dist/jsx.cjs.js",
-	"module": "dist/jsx.esm.js",
+	"main": "dist/jsx-extended.cjs.js",
+	"module": "dist/jsx-extended.esm.js",
 	"scripts": {
-		"build": "rollup -c rollup.config.js --environment NODE_ENV:production",
-		"build:example": "webpack --config=./example/webpack.config.js --mode=production",
+		"build": "rm -rf dist && rollup -c rollup.config.js --environment NODE_ENV:production",
+		"build:example": "rm -rf example/dist && webpack --config=./example/webpack.config.js --mode=production",
 		"docs:build": "vuepress build docs",
 		"docs:dev": "vuepress dev docs --host localhost",
 		"start": "rollup -w -c rollup.config.js --environment NODE_ENV:development",

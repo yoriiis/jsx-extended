@@ -1,6 +1,6 @@
-# jsxCreateElement
+# JSX Extended
 
-![jsxCreateElement](https://img.shields.io/badge/jsx-create-element-master-001935.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/jsx-create-element/Build/master?style=for-the-badge)
+![jsxExtended](https://img.shields.io/badge/jsx-create-element-master-001935.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/jsx-create-element/Build/master?style=for-the-badge)
 
 ## Introduction
 
@@ -226,7 +226,7 @@ animate animateMotion animateTransform circle clipPath color-profil defs desc di
 The `createElement` function is used by the Babel plugin `@babel/plugin-transform-react-jsx`. Import the function on the top of each JSX files.
 
 ```javascript
-import { createElement } from "../../dist/jsx.esm.js";
+import { createElement } from "../../dist/jsx-extended.esm.js";
 ```
 
 ### render
@@ -242,13 +242,13 @@ render(<div>Hello</div>, document.getElementById("app"));
 The `dispatchEvent` function dispatch custom event listeners.
 
 ```jsx
-import { dispatchEvent } from "../../dist/jsx.esm.js";
+import { dispatchEvent } from "../../dist/jsx-extended.esm.js";
 
 dispatchEvent("hello", document.querySelector("#button"));
 ```
 
 ## License
 
-`jsxCreateElement` is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+jsxExtended is licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
 Created with ♥ by [@yoriiis](http://github.com/yoriiis).
