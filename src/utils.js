@@ -90,12 +90,12 @@ export const SVG_TAGS = {
  *
  * @returns {Array} Filtered attributes list by type
  */
-export function getAttributesByType (type, attributes, isSvg = false) {
+export function getAttributesByType(type, attributes, isSvg = false) {
 	if (hasOwn(EXPRESSION, type)) {
 		const expression = EXPRESSION[type]
 		return Object.keys(attributes)
-			.filter(attribute => (isSvg ? attribute : new RegExp(expression).test(attribute)))
-			.map(attribute => ({
+			.filter((attribute) => (isSvg ? attribute : new RegExp(expression).test(attribute)))
+			.map((attribute) => ({
 				name: isSvg ? attribute : attribute.toLowerCase(),
 				value: attributes[attribute]
 			}))
@@ -112,7 +112,7 @@ export function getAttributesByType (type, attributes, isSvg = false) {
  *
  * @returns {Boolean} Object has the property key
  */
-export function hasOwn (obj, key) {
+export function hasOwn(obj, key) {
 	return Object.prototype.hasOwnProperty.call(obj, key)
 }
 
@@ -122,7 +122,7 @@ export function hasOwn (obj, key) {
  * @param {HTMLElement} element Element to add the attribute
  * @param {Object} attribute Object contains name and value of the attribute
  */
-export function setAttribute (element, attribute) {
+export function setAttribute(element, attribute) {
 	element.setAttribute(attribute.name, attribute.value)
 }
 
@@ -132,7 +132,7 @@ export function setAttribute (element, attribute) {
  * @param {HTMLElement} element Element to add the event listener
  * @param {Object} attribute Object contains name and value of the event
  */
-export function addEventListener (element, attribute) {
+export function addEventListener(element, attribute) {
 	element.addEventListener(attribute.name, attribute.value, false)
 }
 
@@ -142,7 +142,7 @@ export function addEventListener (element, attribute) {
  * @param {String} event Custom event name
  * @param {HTMLElement} element Element to add the custom event listener
  */
-export function dispatchEvent (event, element) {
+export function dispatchEvent(event, element) {
 	element.dispatchEvent(new window.CustomEvent(event))
 }
 
@@ -155,8 +155,8 @@ export function dispatchEvent (event, element) {
  *
  * @returns {Array} Array clean without empty childrens
  */
-export function removeEmptyChildren (children, emptyValue) {
-	return children.filter(child => child !== emptyValue)
+export function removeEmptyChildren(children, emptyValue) {
+	return children.filter((child) => child !== emptyValue)
 }
 
 /**
@@ -165,6 +165,6 @@ export function removeEmptyChildren (children, emptyValue) {
  * @param {HTMLCollection} element HTMLCollection from JSX
  * @param {HTMLElement} container Container to append content
  */
-export function render (element, container) {
+export function render(element, container) {
 	container.appendChild(element)
 }

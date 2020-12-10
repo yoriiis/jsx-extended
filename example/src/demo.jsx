@@ -1,6 +1,6 @@
 import { createElement, render, dispatchEvent } from '../../dist/jsx-extended.esm.js'
 import './demo.css'
-console.log(createElement, render, dispatchEvent)
+
 function handleEvent (e) {
 	console.log('event', e.type, this)
 }

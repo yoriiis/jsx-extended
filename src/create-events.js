@@ -8,11 +8,11 @@ import { getAttributesByType, addEventListener } from './utils'
  * @param {HTMLElement} element Element to add events listener
  * @param {Object} attributes Object contains name and value of JSX attributes
  */
-export default function createEvents ({ element, attributes }) {
+export default function createEvents({ element, attributes }) {
 	getAttributesByType('event', attributes)
 		.map(({ name, ...fields }) => ({
 			name: name.substr(2),
 			...fields
 		}))
-		.map(attribute => addEventListener(element, attribute))
+		.map((attribute) => addEventListener(element, attribute))
 }

@@ -7,7 +7,7 @@ import { getAttributesByType } from './utils'
  * @param {Object}
  * @param {Object} attributes Object contains name and value of JSX attributes
  */
-export default function checkCondition ({ attributes }) {
+export default function checkCondition({ attributes }) {
 	const validAttribute = getAttributesByType('condition', attributes)
 
 	// Return the attribute value if exist (true|false)

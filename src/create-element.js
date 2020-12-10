@@ -17,7 +17,7 @@ const EMPTY_NODE_VALUE = null
  * @returns {HTMLElement} Element transform from JSX to HTMLElement valid
  * Element contains attributes and events listener
  */
-export default function createElement (tagName, attributes = {}, ...children) {
+export default function createElement(tagName, attributes = {}, ...children) {
 	// Check if element need to be passed
 	if (attributes !== null && checkCondition({ attributes }) === false) {
 		return EMPTY_NODE_VALUE
